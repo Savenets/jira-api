@@ -14,7 +14,8 @@
     "json": "^9.0.4",
     "monk": "3.1.2",
     "path": "^0.12.7",
-    "querystring": "^0.2.0"
+    "querystring": "^0.2.0",
+    "method-override":"*"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"

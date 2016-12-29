@@ -1,21 +1,31 @@
-'use strict';
+
+
 module.exports = (function() {
+    'use strict';
     const express = require('express');
-    const api = express.Router();
-    const config = require('../../config');
+    const router = express.Router();
+    const config = require('./config');
     const mongo = require('mongodb').MongoClient;
     const objectId = require('mongodb').ObjectID;
-    const utc = new Date().toJSON().slice(0,10);
-    const methodOverride = require('method-override');
+    const assert = require('assert');
+    const qs = require('querystring');
+    const url = 'mongodb://localhost:27017/jira';
     const bodyParser = require('body-parser');
-    api.use(methodOverride());
-    api.use(bodyParser.json());
-    api.use(bodyParser.urlencoded({ extended: true }));
-    api.get('/task/all-tasks', function (req, res, next) {
+
+    const utc = new Date().toJSON().slice(0,10);
+    var tasks = express.Router();
+
+    api.use(express.bodyParser());
+    router.get('/', function(){
+        console.log('checki if done22222');
+    });
+    router.get('/task/all-tasks', function (req, res, next) {
         var resultArray = [];
-        mongo.connect(config.mongo, function(err, db) {
+        mongo.connect(url, function(err, db) {
+            assert.equal(null, err);
             var gotten = db.collection('tasks').find();
             gotten.forEach(function(doc, err) {
+                assert.equal(null, err);
                 resultArray.push(doc);
             }, function() {
                 res.json(resultArray);
@@ -23,9 +33,8 @@ module.exports = (function() {
             });
         });
     });
-    api.post('/insert-task', function (req, res, next) {
-        console.log("task to be inserted");
-        console.log(req.body);
+    router.post('/insert-task', function (req, res, next) {
+        console.log("tast to be inserted");
         var issue = {
             issueTitle :  req.body.issueTitle,
             issueBody:    req.body.issueBody,
@@ -35,7 +44,7 @@ module.exports = (function() {
             comments:     [],
             createdDate:  utc
         };
-        mongo.connect(config.mongo, function(err, db) {
+        mongo.connect(url, function(err, db) {
             db.collection('tasks').insert(issue, function(err, result) {
                 res.send(200, issue);
                 console.log('Item inserted', issue.issueTitle);
@@ -43,7 +52,8 @@ module.exports = (function() {
             });
         });
     });
-    api.post('/update-task', function (req, res, next) {
+
+    router.post('/update-task', function (req, res, next) {
         var issue = {
             issueTitle:  req.body.issueTitle,
             issueBody:    req.body.issueBody,
@@ -54,7 +64,8 @@ module.exports = (function() {
         };
         var id = req.body.id;
         console.log('id s ',id);
-        mongo.connect(config.mongo, function(err, db) {
+
+        mongo.connect(url, function(err, db) {
             db.collection('tasks').updateOne({'_id': objectId(id)}, {$set: issue}, function(err, result) {
                 res.send(200, issue);
                 console.log('Item updated');
@@ -62,7 +73,9 @@ module.exports = (function() {
             });
         });
     });
-    api.post('/comment', function (req, res, next) {
+
+
+    router.post('/comment', function (req, res, next) {
         var comment = {
             commentBody:    req.body.commentBody,
             createBy:       req.body.createBy,
@@ -70,7 +83,8 @@ module.exports = (function() {
         };
         var issueIdToComment = req.body.id;
         console.log('id s ',issueIdToComment);
-        mongo.connect(config.mongo, function(err, db) {
+
+        mongo.connect(url, function(err, db) {
             db.collection('tasks').updateOne({'_id': objectId(issueIdToComment)}, {$push: {comments: comment}}, function(err, result) {
                 res.send(200, comment);
                 console.log('comment added');
@@ -78,5 +92,6 @@ module.exports = (function() {
             });
         });
     });
-    return api;
+
+    return tasks;
 })();
