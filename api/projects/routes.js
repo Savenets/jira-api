@@ -27,7 +27,7 @@ module.exports = (function() {
         });
     });
     api.post('/insert-project', function (req, res, next) {
-        console.log("projects to be inserted");
+        console.log('projects to be inserted');
         var project = {
             projectName :          req.body.projectName,
             projectDescription:    req.body.projectDescription,

@@ -11,7 +11,7 @@ app.use('/projects', projects);
 app.use('/users', users);
 
 console.log('process.env.NODE_ENV = ' + process.env.NODE_ENV);
-console.log("port is" +  config.port);
+console.log('port is' +  config.port);
 console.log('list to port 4000');
 
 app.listen(config.port);

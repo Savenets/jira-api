@@ -24,7 +24,7 @@ module.exports = (function() {
         });
     });
     api.post('/insert-task', function (req, res, next) {
-        console.log("task to be inserted");
+        console.log('task to be inserted');
         console.log(req.body);
         var issue = {
             issueTitle :  req.body.issueTitle,

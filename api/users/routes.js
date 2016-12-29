@@ -25,7 +25,7 @@ module.exports = (function() {
         });
     });
     api.post('/register-user', function (req, res, next) {
-        console.log("user is added");
+        console.log('user is added');
         console.log(req.body);
         var user = {
             userFirstName:       req.body.userFirstName,
@@ -53,22 +53,33 @@ module.exports = (function() {
         var id = req.body.id;
         console.log('id s ',id);
         mongo.connect(config.mongo, function(err, db) {
-            db.collection('users').updateOne({'_id': objectId(id)}, {$set: user}, function(err, result) {
-                res.send(200, user);
-                console.log('user is updated');
-                db.close();
-            });
+            db.collection('users')
+                .updateOne({
+                    '_id': objectId(id)
+                }, {
+                    $set: user
+                }, function(err, result) {
+                    res.send(200, user);
+                    console.log('user is updated');
+                    db.close();
+                });
         });
     });
     api.post('/find-user', function (req, res, next) {
         var issueIdToComment = req.body.id;
         console.log('id s ',issueIdToComment);
+        const comment = 'FIX THIS';
         mongo.connect(config.mongo, function(err, db) {
-            db.collection('users').updateOne({'_id': objectId(issueIdToComment)}, {$push: {comments: comment}}, function(err, result) {
-                res.send(200, comment);
-                console.log('comment added');
-                db.close();
-            });
+            db
+              .collection('users')
+              .updateOne(
+                  {'_id': objectId(issueIdToComment)},
+                  {$push: {comments: comment}},
+                function(err, result) {
+                    res.send(200, comment);
+                    console.log('comment added');
+                    db.close();
+                });
         });
     });
     return api;
