@@ -64,7 +64,29 @@ module.exports = (function() {
             });
         });
     });
+    api.post('/add-user', function (req, res, next) {
+        var user = {
+            userId:      req.body.userId
+        };
+        var projectId =  req.body.projectId;
+       // console.log('id s ',id);
+        mongo.connect(config.mongo, function(err, db) {
+            var allUsersInProjects = db.collection('projects').findOne({'_id': objectId(projectId)}).then(
+                function(data){
+                    console.log(data.users);
+                    res.send(200, data.users);
 
+                }
+            ).catch(function(e){
+                console.log('error');
+            });
+           /* db.collection('projects').updateOne({'_id': objectId(projectId)}, {$push: {users: user}}, function(err, result) {
+                res.send(200, 'user is added');
+                console.log('user added');
+                db.close();
+            });*/
+        });
+    });
     return api;
 })();
 

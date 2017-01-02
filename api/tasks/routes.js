@@ -23,6 +23,20 @@ module.exports = (function() {
             });
         });
     });
+    api.get('/task/:id', function (req, res, next) {
+        var ticketId = req.query.id;
+        mongo.connect(config.mongo, function (err, db) {
+            var ticket = db.collection('tasks').findOne({'_id': objectId(ticketId)});
+            ticket.then(function (data) {
+                    res.json(data);
+                    db.close();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    res.end('something went wrong');
+                })
+        });
+    });
     api.post('/insert-task', function (req, res, next) {
         console.log('task to be inserted');
         console.log(req.body);
