@@ -69,6 +69,7 @@ module.exports = (function() {
         var issueIdToComment = req.body.id;
         console.log('id s ',issueIdToComment);
         const comment = 'FIX THIS';
+        // TODO: Fix this
         mongo.connect(config.mongo, function(err, db) {
             db
               .collection('users')
