@@ -99,9 +99,24 @@ module.exports = (function () {
         mongo.connect(config.mongo, function (err, db) {
             var ticket = db.collection('tasks').updateOne({'_id': objectId(ticketId)}, {$set: {status: issueStatus}});
             ticket.then(function (data) {
-                    res.json(data);
-                    db.close();
-                })
+                res.json(data);
+                db.close();
+            })
+                .catch(function (error) {
+                    console.log(error);
+                    res.end('something went wrong');
+                });
+        });
+    });
+    api.post('/priority', function (req, res, next) {
+        var issuePriority =  req.body.issuePriority;
+        var ticketId = req.body.ticketId;
+        mongo.connect(config.mongo, function (err, db) {
+            var ticket = db.collection('tasks').updateOne({'_id': objectId(ticketId)}, {$set: {status: issuePriority}});
+            ticket.then(function (data) {
+                res.json(data);
+                db.close();
+            })
                 .catch(function (error) {
                     console.log(error);
                     res.end('something went wrong');

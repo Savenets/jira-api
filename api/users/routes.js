@@ -87,9 +87,9 @@ module.exports = (function() {
         mongo.connect(config.mongo, function (err, db) {
             var user = db.collection('users').updateOne({'_id': objectId(userId)}, {$set: {archived: true}});
             user.then(function (data) {
-                    res.json(data);
-                    db.close();
-                })
+                res.json(data);
+                db.close();
+            })
                 .catch(function (error) {
                     console.log(error);
                     res.end('something went wrong');
