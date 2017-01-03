@@ -46,6 +46,7 @@ module.exports = (function () {
             createdBy: req.body.createdBy,
             assignedTo: req.body.assignedTo,
             issueType: req.body.issueType,
+            archived: req.body.archived,
             comments: [],
             createdDate: utc
         };
@@ -90,6 +91,21 @@ module.exports = (function () {
                 console.log('comment added');
                 db.close();
             });
+        });
+    });
+    api.post('/status', function (req, res, next) {
+        var issueStatus =  req.body.issueStatus;
+        var ticketId = req.body.ticketId;
+        mongo.connect(config.mongo, function (err, db) {
+            var ticket = db.collection('tasks').updateOne({'_id': objectId(ticketId)}, {$set: {status: issueStatus}});
+            ticket.then(function (data) {
+                    res.json(data);
+                    db.close();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    res.end('something went wrong');
+                });
         });
     });
     return api;

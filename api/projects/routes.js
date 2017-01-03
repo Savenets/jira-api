@@ -87,6 +87,20 @@ module.exports = (function() {
             });*/
         });
     });
+    api.get('/archive/:id', function (req, res, next) {
+        var projectId = req.query.id;
+        mongo.connect(config.mongo, function (err, db) {
+            var project = db.collection('projects').updateOne({'_id': objectId(projectId)}, {$set: {archived: true}});
+            project.then(function (data) {
+                    res.json(data);
+                    db.close();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    res.end('something went wrong');
+                });
+        });
+    });
     return api;
 })();
 

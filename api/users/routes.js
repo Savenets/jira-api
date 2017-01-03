@@ -82,6 +82,20 @@ module.exports = (function() {
                 });
         });
     });
+    api.get('/archive/:id', function (req, res, next) {
+        var userId = req.query.id;
+        mongo.connect(config.mongo, function (err, db) {
+            var user = db.collection('users').updateOne({'_id': objectId(userId)}, {$set: {archived: true}});
+            user.then(function (data) {
+                    res.json(data);
+                    db.close();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    res.end('something went wrong');
+                });
+        });
+    });
     return api;
 })();
 
