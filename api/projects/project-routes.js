@@ -5,7 +5,9 @@ module.exports = (function() {
     const config = require('../../config');
     const mongo = require('mongodb').MongoClient;
     const objectId = require('mongodb').ObjectID;
+    // Save full timestamp
     const utc = new Date().toJSON().slice(0,10);
+    // TODO: Move bodyParser to app.js
     const methodOverride = require('method-override');
     const bodyParser = require('body-parser');
 
@@ -64,6 +66,8 @@ module.exports = (function() {
             });
         });
     });
+    // TODO: Redo
+    // api.post('/project/:projectID/user/:userID')
     api.put('/add-user', function (req, res, next) {
         var user = {
             userId:      req.body.userId
@@ -75,10 +79,10 @@ module.exports = (function() {
                 function(data){
                     console.log(data.users);
                     res.send(200, data.users);
-
                 }
             ).catch(function(e){
-                console.log('error');
+                console.error('error', e);
+                // TODO send error (500, 400, ...)
             });
            /* db.collection('projects').updateOne({'_id': objectId(projectId)}, {$push: {users: user}}, function(err, result) {
                 res.send(200, 'user is added');
@@ -87,6 +91,10 @@ module.exports = (function() {
             });*/
         });
     });
+    // { archived: false }
+    // projects/:id/archive
+    // HTTP PATCH /projects/:id
+    // Try api.patch instead
     api.put('/archive', function (req, res, next) {
         var projectId = req.body.projectId;
         mongo.connect(config.mongo, function (err, db) {

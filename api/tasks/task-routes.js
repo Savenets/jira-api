@@ -78,6 +78,8 @@ module.exports = (function () {
             });
         });
     });
+    // TODO
+    // POST /tasks/:task_id/comments
     api.put('/comments', function (req, res, next) {
         var comment = {
             commentBody: req.body.commentBody,
@@ -94,6 +96,7 @@ module.exports = (function () {
             });
         });
     });
+    // PATCH /tasks/:task_id/status
     api.put('/status', function (req, res, next) {
         var issueStatus =  req.body.issueStatus;
         var ticketId = req.body.ticketId;
