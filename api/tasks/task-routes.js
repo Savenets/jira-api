@@ -12,31 +12,20 @@ module.exports = (function () {
     api.use(bodyParser.json());
     api.use(bodyParser.urlencoded({extended: true}));
 
+
+    const tasks = require('./task-model');
+
     api.get('/', function (req, res, next) {
-        var resultArray = [];
-        mongo.connect(config.mongo, function (err, db) {
-            var gotten = db.collection('tasks').find();
-            gotten.forEach(function (doc, err) {
-                resultArray.push(doc);
-            }, function () {
-                res.json(resultArray);
-                db.close();
-            });
-        });
+        tasks.getTasks(function(){
+            res.json(tasks.tasksList);
+        })
     });
     api.get('/:id', function (req, res, next) {
         var ticketId = req.query.id;
-        mongo.connect(config.mongo, function (err, db) {
-            var ticket = db.collection('tasks').findOne({'_id': objectId(ticketId)});
-            ticket.then(function (data) {
-                res.json(data);
-                db.close();
-            })
-                .catch(function (error) {
-                    console.log(error);
-                    res.end('something went wrong');
-                });
-        });
+
+        tasks.getTask(ticketId, function(d){
+            res.json(d);
+        })
     });
     api.post('/', function (req, res, next) {
         console.log('task to be inserted');

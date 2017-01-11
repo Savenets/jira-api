@@ -12,17 +12,12 @@ module.exports = (function() {
     api.use(bodyParser.json());
     api.use(bodyParser.urlencoded({ extended: true }));
 
+    const users = require('./user-model');
+
     api.get('/', function (req, res, next) {
-        var resultArray = [];
-        mongo.connect(config.mongo, function(err, db) {
-            var gotten = db.collection('users').find();
-            gotten.forEach(function(doc, err) {
-                resultArray.push(doc);
-            }, function() {
-                res.json(resultArray);
-                db.close();
-            });
-        });
+        users.getUsers(function(){
+            res.json(users.usersList);
+        })
     });
     api.post('/', function (req, res, next) {
         console.log('user is added');
@@ -32,66 +27,36 @@ module.exports = (function() {
             userLastName:        req.body.userLastName,
             userContactEmail:    req.body.userContactEmail,
             userPass:            req.body.userPass,
-            userTitle:           req.body.userTitle,
+            userTitle:           req.body.userTitle
         };
-        mongo.connect(config.mongo, function(err, db) {
-            db.collection('users').insert(user, function(err, result) {
-                res.send(200, user);
-                console.log('Item inserted', user.userFirstName);
-                db.close();
-            });
+        users.addUser(user, function(){
+            res.send(200, user);
         });
     });
-    api.put('/', function (req, res, next) {
+    api.put('/:id', function (req, res, next) {
         var user = {
             userFirstName:       req.body.userFirstName,
             userLastName:        req.body.userLastName,
             userContactEmail:    req.body.userContactEmail,
             userPass:            req.body.userPass,
-            userTitle:           req.body.userTitle,
+            userTitle:           req.body.userTitle
         };
-        var id = req.body.id;
-        console.log('id s ',id);
-        mongo.connect(config.mongo, function(err, db) {
-            db.collection('users')
-                .updateOne({
-                    '_id': objectId(id)
-                }, {
-                    $set: user
-                }, function(err, result) {
-                    res.send(200, user);
-                    console.log('user is updated');
-                    db.close();
-                });
+        var id = req.query.id;
+        users.updateUser(user, id, function(user){
+            res.send(200, user);
         });
     });
     api.get('/:id', function (req, res, next) {
         var userId = req.query.id;
-        mongo.connect(config.mongo, function (err, db) {
-            var ticket = db.collection('users').findOne({'_id': objectId(userId)});
-            ticket.then(function (data) {
-                res.json(data);
-                db.close();
-            })
-                .catch(function (error) {
-                    console.log(error);
-                    res.end('something went wrong');
-                });
-        });
+        users.getUser(userId, function(data){
+            res.json(data);
+        })
     });
-    api.put('/archive', function (req, res, next) {
-        var userId = req.body.id;
-        mongo.connect(config.mongo, function (err, db) {
-            var user = db.collection('users').updateOne({'_id': objectId(userId)}, {$set: {archived: true}});
-            user.then(function (data) {
-                res.json(data);
-                db.close();
-            })
-                .catch(function (error) {
-                    console.log(error);
-                    res.end('something went wrong');
-                });
-        });
+    api.patch('/archive/:id', function (req, res, next) {
+        var userId = req.query.id;
+        users.archiveUser(userId, function(data){
+            res.json(data);
+        })
     });
     return api;
 })();

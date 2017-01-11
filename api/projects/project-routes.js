@@ -11,23 +11,19 @@ module.exports = (function() {
     const methodOverride = require('method-override');
     const bodyParser = require('body-parser');
 
+    const projects = require('./project-model');
+
     api.use(methodOverride());
     api.use(bodyParser.json());
     api.use(bodyParser.urlencoded({ extended: true }));
 
+
     api.get('/', function (req, res, next) {
-        console.log('update projects');
-        var resultArray = [];
-        mongo.connect(config.mongo, function(err, db) {
-            var gotten = db.collection('projects').find();
-            gotten.forEach(function(doc, err) {
-                resultArray.push(doc);
-            }, function() {
-                res.json(resultArray);
-                db.close();
-            });
-        });
+        projects.getProjects(function(){
+            res.json(projects.projectsList);
+        })
     });
+
     api.post('/', function (req, res, next) {
         console.log('projects to be inserted');
         var project = {
@@ -39,13 +35,9 @@ module.exports = (function() {
             updatedDate:           '',
             isActive:              true
         };
-        mongo.connect(config.mongo, function(err, db) {
-            db.collection('projects').insert(project, function(err, result) {
-                res.send(200, project);
-                console.log('Item inserted', project.projectName);
-                db.close();
-            });
-        });
+        projects.submitProject(project, function(){
+            res.send(200, project);
+        })
     });
     api.put('/', function (req, res, next) {
         var project = {
@@ -57,14 +49,9 @@ module.exports = (function() {
             isActive:              req.body.isActive,
         };
         var id = req.body.id;
-        console.log('id s ',id);
-        mongo.connect(config.mongo, function(err, db) {
-            db.collection('projects').updateOne({'_id': objectId(id)}, {$set: project}, function(err, result) {
-                res.send(200, project);
-                console.log('Item updated');
-                db.close();
-            });
-        });
+        projects.updateProject(project, id, function(){
+            res.send(200, project);
+        })
     });
     // TODO: Redo
     // api.post('/project/:projectID/user/:userID')
@@ -73,6 +60,7 @@ module.exports = (function() {
             userId:      req.body.userId
         };
         var projectId =  req.body.projectId;
+
        // console.log('id s ',id);
         mongo.connect(config.mongo, function(err, db) {
             var allUsersInProjects = db.collection('projects').findOne({'_id': objectId(projectId)}).then(
