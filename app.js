@@ -5,6 +5,7 @@ const config = require('./config');
 const tasks = require('./api/tasks/task-routes');
 const projects = require('./api/projects/project-routes');
 const users = require('./api/users/user-routes');
+const db = require('./db');
 
 app.use('/tasks', tasks);
 app.use('/projects', projects);

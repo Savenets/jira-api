@@ -6,7 +6,7 @@ module.exports = (function() {
     const mongo = require('mongodb').MongoClient;
     const objectId = require('mongodb').ObjectID;
     // Save full timestamp
-    const utc = new Date().toJSON().slice(0,10);
+    //const utc = new Date()
     // TODO: Move bodyParser to app.js
     const methodOverride = require('method-override');
     const bodyParser = require('body-parser');
@@ -19,9 +19,12 @@ module.exports = (function() {
 
 
     api.get('/', function (req, res, next) {
-        projects.getProjects(function(){
-            res.json(projects.projectsList);
+        projects.getProjects(function(projectsList){
+            res.json(projectsList);
         });
+       /* projects.getProjects.then(function(data) {
+            res.json(data);
+        })*/
     });
 
     api.post('/', function (req, res, next) {
@@ -83,16 +86,19 @@ module.exports = (function() {
     // projects/:id/archive
     // HTTP PATCH /projects/:id
     // Try api.patch instead
-    api.patch('/archive/:id', function (req, res, next) {
-        var projectId = req.query.id;
-        projects.archiveProject(projectId, function(data){
+    api.patch('/:id/archive', function (req, res, next) {
+        console.log(req.query);
+        var projectId = req.params.id;
+        // use callback
+        //redevelop db + add promise
+        projects.archiveProjec (projectId, function(data){
             if(data){
                 res.sendStatus(200);
             }
             else {
                 res.sendStatus(500).send('The server encountered an unexpected condition which prevented it from fulfilling the request.');
             }
-        })
+        });
     });
     return api;
 })();
