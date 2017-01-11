@@ -92,7 +92,7 @@ module.exports = (function() {
             else {
                 res.sendStatus(500).send('The server encountered an unexpected condition which prevented it from fulfilling the request.');
             }
-        })
+        });
     });
     return api;
 })();

@@ -39,9 +39,9 @@ module.exports = (function() {
             mongo.connect(config.mongo, function (err, db) {
                 var project = db.collection('projects').updateOne({'_id': objectId(id)}, {$set: {archived: true}});
                 project.then(function (data) {
-                        db.close();
-                        f(data);
-                    })
+                    db.close();
+                    f(data);
+                })
                     .catch(function (error) {
                         f(error);
                     });
