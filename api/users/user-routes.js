@@ -17,7 +17,7 @@ module.exports = (function() {
     api.get('/', function (req, res, next) {
         users.getUsers(function(){
             res.json(users.usersList);
-        })
+        });
     });
     api.post('/', function (req, res, next) {
         console.log('user is added');
@@ -50,13 +50,13 @@ module.exports = (function() {
         var userId = req.query.id;
         users.getUser(userId, function(data){
             res.json(data);
-        })
+        });
     });
     api.patch('/archive/:id', function (req, res, next) {
         var userId = req.query.id;
         users.archiveUser(userId, function(data){
             res.json(data);
-        })
+        });
     });
     return api;
 })();

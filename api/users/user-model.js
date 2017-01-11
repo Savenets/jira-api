@@ -30,11 +30,11 @@ module.exports = (function () {
             mongo.connect(config.mongo, function (err, db) {
                 var user = db.collection('users').findOne({'_id': objectId(id)});
                 user.then(function (data) {
-                        db.close();
-                        f(data);
-                    })
+                    db.close();
+                    f(data);
+                })
                     .catch(function (error) {
-                        res.end('something went wrong');
+                        //res.end('something went wrong');
                     });
             });
         },
@@ -47,7 +47,7 @@ module.exports = (function () {
                         $set: user
                     }, function(err, result) {
                         db.close();
-                        f(result)
+                        f(result);
                     });
             });
         },
@@ -55,12 +55,12 @@ module.exports = (function () {
             mongo.connect(config.mongo, function (err, db) {
                 var user = db.collection('users').findOne({'_id': objectId(id)});
                 user.then(function (data) {
-                        f(data)
-                        db.close();
-                    })
+                    f(data);
+                    db.close();
+                })
                     .catch(function (error) {
                         console.log(error);
-                        res.end('something went wrong');
+                        //res.end('something went wrong');
                     });
             });
         },
@@ -68,16 +68,16 @@ module.exports = (function () {
             mongo.connect(config.mongo, function (err, db) {
                 var user = db.collection('users').updateOne({'_id': objectId(id)}, {$set: {archived: true}});
                 user.then(function (data) {
-                        db.close();
-                        f(data)
-                    })
+                    db.close();
+                    f(data);
+                })
                     .catch(function (error) {
                         console.log(error);
-                        res.end('something went wrong');
+                        //res.end('something went wrong');
                     });
             });
         }
-    }
+    };
     return users;
 })();
 

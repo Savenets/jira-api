@@ -21,7 +21,7 @@ module.exports = (function() {
     api.get('/', function (req, res, next) {
         projects.getProjects(function(){
             res.json(projects.projectsList);
-        })
+        });
     });
 
     api.post('/', function (req, res, next) {
@@ -37,7 +37,7 @@ module.exports = (function() {
         };
         projects.submitProject(project, function(){
             res.send(200, project);
-        })
+        });
     });
     api.put('/', function (req, res, next) {
         var project = {
@@ -51,7 +51,7 @@ module.exports = (function() {
         var id = req.body.id;
         projects.updateProject(project, id, function(){
             res.send(200, project);
-        })
+        });
     });
     // TODO: Redo
     // api.post('/project/:projectID/user/:userID')
@@ -83,19 +83,16 @@ module.exports = (function() {
     // projects/:id/archive
     // HTTP PATCH /projects/:id
     // Try api.patch instead
-    api.put('/archive', function (req, res, next) {
-        var projectId = req.body.projectId;
-        mongo.connect(config.mongo, function (err, db) {
-            var project = db.collection('projects').updateOne({'_id': objectId(projectId)}, {$set: {archived: true}});
-            project.then(function (data) {
-                res.json(data);
-                db.close();
-            })
-                .catch(function (error) {
-                    console.log(error);
-                    res.end('something went wrong');
-                });
-        });
+    api.patch('/archive/:id', function (req, res, next) {
+        var projectId = req.query.id;
+        projects.archiveProject(projectId, function(data){
+            if(data){
+                res.sendStatus(200);
+            }
+            else {
+                res.sendStatus(500).send('The server encountered an unexpected condition which prevented it from fulfilling the request.');
+            }
+        })
     });
     return api;
 })();

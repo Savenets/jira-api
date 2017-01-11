@@ -32,14 +32,13 @@ module.exports = (function () {
                 ticket.then(function (data) {
                     db.close();
                     f(data);
-                    })
+                })
                     .catch(function (error) {
-                        console.log(error)
-                        res.end('something went wrong');
+                       // res.end('something went wrong');
                     });
             });
         }
-    }
+    };
     return tasks;
 })();
 

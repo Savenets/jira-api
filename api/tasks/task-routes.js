@@ -18,14 +18,13 @@ module.exports = (function () {
     api.get('/', function (req, res, next) {
         tasks.getTasks(function(){
             res.json(tasks.tasksList);
-        })
+        });
     });
     api.get('/:id', function (req, res, next) {
         var ticketId = req.query.id;
-
         tasks.getTask(ticketId, function(d){
             res.json(d);
-        })
+        });
     });
     api.post('/', function (req, res, next) {
         console.log('task to be inserted');
