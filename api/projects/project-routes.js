@@ -34,7 +34,7 @@ module.exports = (function() {
             projectDescription:    req.body.projectDescription,
             projectLink:           req.body.projectLink,
             users:                 [],
-            createdDate:           utc,
+            createdDate:           new Date(),
             updatedDate:           '',
             isActive:              true
         };
@@ -48,7 +48,7 @@ module.exports = (function() {
             projectDescription:    req.body.projectDescription,
             projectLink:           req.body.projectLink,
             users:                 [],
-            updatedDate:           utc,
+            updatedDate:           new Date(),
             isActive:              req.body.isActive,
         };
         var id = req.body.id;

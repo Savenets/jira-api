@@ -1,8 +1,8 @@
 'use strict';
 module.exports = (function() {
     const config = require('../../config');
-    //const mongo = require('mongodb').MongoClient;
-    //const objectId = require('mongodb').ObjectID;
+    const mongo = require('mongodb').MongoClient;
+    const objectId = require('mongodb').ObjectID;
     const db = require('../../db');
 
     const projects = {
