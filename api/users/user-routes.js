@@ -5,7 +5,6 @@ module.exports = (function() {
     const config = require('../../config');
     const mongo = require('mongodb').MongoClient;
     const objectId = require('mongodb').ObjectID;
-    const utc = new Date().toJSON().slice(0,10);
     const methodOverride = require('method-override');
     const bodyParser = require('body-parser');
     api.use(methodOverride());

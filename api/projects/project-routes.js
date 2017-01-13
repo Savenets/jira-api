@@ -23,7 +23,7 @@ module.exports = (function() {
                 console.log(err);
                 res.status(500);
             }
-         )
+         );
     });
     api.post('/', function (req, res) {
         console.log('projects to be inserted');
@@ -64,7 +64,7 @@ module.exports = (function() {
             .catch(err =>{
                 console.log(err);
                 res.status(500);
-            })
+            });
     });
     // TODO: Redo
     // api.post('/project/:projectID/user/:userID')
@@ -99,7 +99,7 @@ module.exports = (function() {
         .catch(err =>{
             console.log(err);
             res.status(500);
-        })
+        });
     });
     return api;
 })();
