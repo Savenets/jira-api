@@ -5,7 +5,6 @@ module.exports = (function () {
     const config = require('../../config');
     const mongo = require('mongodb').MongoClient;
     const objectId = require('mongodb').ObjectID;
-    const utc = new Date().toJSON().slice(0, 10);
     const methodOverride = require('method-override');
     const bodyParser = require('body-parser');
     api.use(methodOverride());
@@ -37,7 +36,7 @@ module.exports = (function () {
             issueType: req.body.issueType,
             archived: req.body.archived,
             comments: [],
-            createdDate: utc
+            createdDate: new Date()
         };
         mongo.connect(config.mongo, function (err, db) {
             db.collection('tasks').insert(issue, function (err, result) {
@@ -54,7 +53,7 @@ module.exports = (function () {
             createdBy: req.body.createdBy,
             assignedTo: req.body.assignedTo,
             issueType: req.body.issueType,
-            updatedDate: utc
+            updatedDate: new Date()
         };
         var id = req.body.id;
         console.log('id s ', id);
@@ -72,7 +71,7 @@ module.exports = (function () {
         var comment = {
             commentBody: req.body.commentBody,
             createBy: req.body.createBy,
-            createdDate: utc
+            createdDate: new Date()
         };
         var issueIdToComment = req.body.issueId;
         console.log('id s ', issueIdToComment);

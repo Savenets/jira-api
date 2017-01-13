@@ -6,37 +6,31 @@ module.exports = (function() {
     const db = require('../../db');
 
     const projects = {
-        getProjects: function getUsers(f){
-            db.then(function(db){
-                const projectsList = [];
-                const raw = db.collection('projects').find();
-                raw.forEach(function(doc) {
-                    projectsList.push(doc);
-                }, function() {
-                    f(projectsList);
-                });
-            });
+        getProjects:
+            function(){
+                return  db.then( db => db.collection('projects').find())
+                    .then( cursor => cursor.toArray());
         },
-        submitProject: function(project, f){
-            mongo.connect(config.mongo, function(err, db) {
-                db.collection('projects').insert(project, function(err, result) {
-                    console.log('Item inserted', project.projectName);
-                    db.close();
-                    f();
+        submitProject:
+            function(project){
+                return db.then((db) => {
+                    db.collection('projects').insert(project)
                 });
-            });
-        },
-        updateProject: function(project, id, f){
-            mongo.connect(config.mongo, function(err, db) {
-                db.collection('projects').updateOne({'_id': objectId(id)}, {$set: project}, function(err, result) {
-                    console.log('Item updated');
-                    db.close();
-                    f();
-                });
-            });
-        },
-        archiveProject: function(id, f){
-            mongo.connect(config.mongo, function (err, db) {
+            },
+        updateProject:
+            function(project, id){
+                return db.then(db => {
+                    db.collection('projects').updateOne({'_id': objectId(id)}, {$set: project});
+                })
+            },
+        archiveProject:
+            function(id){
+                return db.then((db)=>{
+                    db.collection('projects').updateOne({'_id': objectId(id)}, {$set: {archived: true}})
+                })
+               // return
+
+            /*mongo.connect(config.mongo, function (err, db) {
                 var project = db.collection('projects').updateOne({'_id': objectId(id)}, {$set: {archived: true}});
                 //return new promise
                 project.then(function (data) {
@@ -46,7 +40,7 @@ module.exports = (function() {
                     .catch(function (error) {
                         f(error);
                     });
-            });
+            });*/
         }
     };
     return projects;
