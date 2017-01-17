@@ -1,7 +1,5 @@
 'use strict';
 module.exports = (function() {
-   // const config = require('../../config');
-    const mongo = require('mongodb').MongoClient;
     const objectId = require('mongodb').ObjectID;
     const db = require('../../db');
 
@@ -13,7 +11,7 @@ module.exports = (function() {
             },
         getProject:
             function(id){
-                return db.then(db => db.collection('projects').findOne({'_id': objectId(id)}))
+                return db.then(db => db.collection('projects').findOne({'_id': objectId(id)}));
             },
         submitProject:
             function(project){
@@ -36,7 +34,7 @@ module.exports = (function() {
                         {'_id': objectId(projectId)},
                         {$push: {users: user}
                         });
-                })
+                });
             },
         archiveProject:
             function(id){

@@ -11,22 +11,45 @@ module.exports = (function() {
             res.json(data);
         })
             .catch(err=>{
-            console.log(err);
-            res.status(500);
-        });
+                console.log(err);
+                res.status(500);
+            });
     });
-    api.get('/:id', function (req, res, next) {
-        var userId = req.params.id;
-        users.getUser(userId).then(data=>{
-            res.status(200);
-            res.json(data);
-        })
+    api.get('/all-users', function (req, res) {
+        users.getAllUsers()
+            .then(data=>{
+                res.status(200);
+                res.json(data);
+            })
             .catch(err=>{
                 console.log(err);
                 res.status(500);
             });
     });
-    api.post('/', function (req, res, next) {
+    api.get('/archived', function (req, res) {
+        users.getArchived()
+            .then(data=>{
+                res.status(200);
+                res.json(data);
+            })
+            .catch(err=>{
+                console.log(err);
+                res.status(500);
+            });
+    });
+    api.get('/:id', function (req, res) {
+        var userId = req.params.id;
+        users.getUser(userId)
+            .then(data=>{
+                res.status(200);
+                res.json(data);
+            })
+            .catch(err=>{
+                console.log(err);
+                res.status(500);
+            });
+    });
+    api.post('/', function (req, res) {
         console.log('user is added');
         console.log(req.body);
         var user = {
@@ -39,15 +62,15 @@ module.exports = (function() {
         };
         users.addUser(user)
             .then(data=>{
-            res.status(200);
-            res.json(data);
-        })
+                res.status(200);
+                res.json(data);
+            })
             .catch(err=>{
                 console.log(err);
                 res.status(500);
             });
     });
-    api.put('/:id', function (req, res, next) {
+    api.put('/:id', function (req, res) {
         var user = {
             userFirstName:       req.body.userFirstName,
             userLastName:        req.body.userLastName,
@@ -57,7 +80,7 @@ module.exports = (function() {
             updatedDate:         req.body.updatedDate
         };
         var id = req.params.id;
-        users.updateUser(user, id).then(data=>{
+        users.updateUser(user, id).then(()=>{
             res.status(200);
             res.json(user);
         })
@@ -66,11 +89,11 @@ module.exports = (function() {
                 res.status(500);
             });
     });
-    api.patch('/archive/:id', function (req, res, next) {
+    api.patch('/archive/:id', function (req, res) {
         var userId = req.params.id;
-        users.archiveUser(userId).then(data=>{
-                res.status(200);
-                res.json({archived: userId});
+        users.archiveUser(userId).then(() => {
+            res.status(200);
+            res.json({archived: userId});
         })
             .catch(err=>{
                 console.log(err);

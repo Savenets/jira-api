@@ -1,6 +1,5 @@
 'use strict';
 module.exports = (function () {
-    const mongo = require('mongodb').MongoClient;
     const objectId = require('mongodb').ObjectID;
     const db = require('../../db');
 
@@ -12,19 +11,19 @@ module.exports = (function () {
             },
         getTask:
             function(id){
-                return db.then(db => db.collection('tasks').findOne({'_id': objectId(id)}))
-        },
+                return db.then(db => db.collection('tasks').findOne({'_id': objectId(id)}));
+            },
         createTask:
             function(task){
-                return db.then(db=> {db.collection('tasks').insert(task)})
+                return db.then(db => db.collection('tasks').insert(task));
             },
         updateTask:
             function(task, id){
                 return db.then(db=>{
                     db.collection('tasks').updateOne(
                         {'_id': objectId(id)},
-                        {$set: task})
-                })
+                        {$set: task});
+                });
             },
         addComment:
             function(comment, taskId){
@@ -32,7 +31,7 @@ module.exports = (function () {
                     db.collection('tasks').updateOne(
                         {'_id': objectId(taskId)},
                         {$push: {comments: comment}
-                        })
+                        });
                 });
             },
         status:
@@ -41,16 +40,17 @@ module.exports = (function () {
                     db.collection('tasks').updateOne(
                         {'_id': objectId(ticketId)},
                         {$set: {status: issueStatus}
-                        })
-                })
+                        });
+                });
             },
         priority:
             function(ticketId,issuePriority){
                 return db.then(db=>{
-                    db.collection('tasks').updateOne({'_id': objectId(ticketId)},
+                    db.collection('tasks').updateOne(
+                        {'_id': objectId(ticketId)},
                         {$set: {status: issuePriority}
                         });
-                })
+                });
             }
     };
     return tasks;

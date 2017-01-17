@@ -6,14 +6,14 @@ module.exports = (function () {
 
     api.get('/', function (req, res) {
         tasks.getTasks().then(data=> {
-                console.log('tasks printed');
-                res.status(200);
-                res.json(data);
-            })
+            console.log('tasks printed');
+            res.status(200);
+            res.json(data);
+        })
             .catch(err => {
-                    console.log(err);
-                    res.tatus(500);
-                }
+                console.log(err);
+                res.tatus(500);
+            }
             );
     });
     api.get('/:id', function (req, res) {
@@ -25,7 +25,7 @@ module.exports = (function () {
         .catch(err=>{
             console.log(err);
             res.status(500);
-        })
+        });
     });
     api.post('/', function (req, res) {
         console.log('task to be inserted');
@@ -36,10 +36,10 @@ module.exports = (function () {
             assignedTo:    req.body.assignedTo,
             issueType:     req.body.issueType,
             archived:      req.body.archived,
-            comments: [],
-            createdDate: new Date()
+            comments:      [],
+            createdDate:   new Date()
         };
-        tasks.createTask(issue).then(data=>{
+        tasks.createTask(issue).then(() => {
             res.status(200);
             res.json(issue);
         })
@@ -58,7 +58,7 @@ module.exports = (function () {
             updatedDate:   new Date()
         };
         var taskId = req.params.taskId;
-        tasks.updateTask(issue, taskId).then(data=>{
+        tasks.updateTask(issue, taskId).then(() => {
             res.status(200);
             res.json(issue);
         }).catch(err=>{
@@ -75,7 +75,7 @@ module.exports = (function () {
             createdDate: new Date()
         };
         var taskId = req.params.taskId;
-        tasks.addComment(comment, taskId).then(data=>{
+        tasks.addComment(comment, taskId).then(() => {
             res.status(200);
             res.json({'commentAdded':true});
         })
@@ -86,11 +86,10 @@ module.exports = (function () {
     });
     // PATCH /tasks/:task_id/status
     api.patch('/:taskId/:status', function (req, res) {
-        console.log("status to be changd");
         const status =  req.params.status;
         const taskId = req.params.taskId;
 
-        tasks.status(taskId, status).then(data=>{
+        tasks.status(taskId, status).then(() => {
             console.log('stauts changed');
             res.status(200);
             res.json({'statusUpdated':true});
@@ -102,7 +101,7 @@ module.exports = (function () {
     api.put('/:taskId/:priority', function (req, res) {
         const priority =  req.params.priority;
         const taskId = req.params.taskId;
-        tasks.priority(taskId,priority).then(data=>{
+        tasks.priority(taskId,priority).then(() => {
             res.status(200);
             res.json({'statusUpdated':true});
         }).catch(err=>{

@@ -1,15 +1,14 @@
-
 const express = require('express');
 const app = new express();
 const config = require('./config');
 
-
-
 const tasks = require('./api/tasks/task-routes');
 const projects = require('./api/projects/project-routes');
 const users = require('./api/users/user-routes');
-const db = require('./db');
+const bodyParser = require('body-parser');
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.use('/tasks', tasks);
@@ -19,8 +18,5 @@ app.use('/users', users);
 console.log('process.env.NODE_ENV = ' + process.env.NODE_ENV);
 console.log('port is' +  config.port);
 console.log('list to port 4000');
-
-
-
 
 app.listen(config.port);

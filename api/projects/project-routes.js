@@ -8,12 +8,12 @@ module.exports = (function() {
         projects.getProjects()
             .then(data => {
                 res.status(200);
-                res.json(data)})
+                res.json(data);
+            })
             .catch(err =>{
                 console.log(err);
                 res.status(500);
-            }
-         );
+            });
     });
     api.get('/:id', function (req, res) {
         var projectId = req.params.id;
@@ -22,9 +22,9 @@ module.exports = (function() {
             res.json(data);
         })
         .catch(err=>{
-            coneols.log(err);
+            console.log(err);
             res.status(500);
-        })
+        });
     });
     api.post('/', function (req, res) {
         console.log('projects to be inserted');
@@ -47,7 +47,7 @@ module.exports = (function() {
                 res.status(500);
             });
     });
-    api.put('/', function (req, res, next) {
+    api.put('/', function (req, res) {
         var project = {
             projectName :          req.body.projectName,
             projectDescription:    req.body.projectDescription,
@@ -67,7 +67,7 @@ module.exports = (function() {
                 res.status(500);
             });
     });
-    api.put('/:projectID/notify/:userID', function (req, res, next) {
+    api.put('/:projectID/notify/:userID', function (req, res) {
         var user = {
             userId:      req.params.userID
         };
@@ -83,6 +83,7 @@ module.exports = (function() {
     });
     api.patch('/:id/archive', function (req, res) {
         const projectId = req.params.id;
+
         projects.archiveProject(projectId).then(()=>{
             res.status(200);
             res.json({'archived':true});
