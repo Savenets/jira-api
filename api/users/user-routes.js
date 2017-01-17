@@ -2,21 +2,29 @@
 module.exports = (function() {
     const express = require('express');
     const api = express.Router();
-    const config = require('../../config');
-    const mongo = require('mongodb').MongoClient;
-    const objectId = require('mongodb').ObjectID;
-    const methodOverride = require('method-override');
-    const bodyParser = require('body-parser');
-    api.use(methodOverride());
-    api.use(bodyParser.json());
-    api.use(bodyParser.urlencoded({ extended: true }));
 
     const users = require('./user-model');
 
-    api.get('/', function (req, res, next) {
-        users.getUsers(function(){
-            res.json(users.usersList);
+    api.get('/', function (req, res) {
+        users.getUsers().then(data=>{
+            res.status(200);
+            res.json(data);
+        })
+            .catch(err=>{
+            console.log(err);
+            res.status(500);
         });
+    });
+    api.get('/:id', function (req, res, next) {
+        var userId = req.params.id;
+        users.getUser(userId).then(data=>{
+            res.status(200);
+            res.json(data);
+        })
+            .catch(err=>{
+                console.log(err);
+                res.status(500);
+            });
     });
     api.post('/', function (req, res, next) {
         console.log('user is added');
@@ -26,11 +34,18 @@ module.exports = (function() {
             userLastName:        req.body.userLastName,
             userContactEmail:    req.body.userContactEmail,
             userPass:            req.body.userPass,
-            userTitle:           req.body.userTitle
+            userTitle:           req.body.userTitle,
+            registered:          req.body.registered
         };
-        users.addUser(user, function(){
-            res.send(200, user);
-        });
+        users.addUser(user)
+            .then(data=>{
+            res.status(200);
+            res.json(data);
+        })
+            .catch(err=>{
+                console.log(err);
+                res.status(500);
+            });
     });
     api.put('/:id', function (req, res, next) {
         var user = {
@@ -38,24 +53,29 @@ module.exports = (function() {
             userLastName:        req.body.userLastName,
             userContactEmail:    req.body.userContactEmail,
             userPass:            req.body.userPass,
-            userTitle:           req.body.userTitle
+            userTitle:           req.body.userTitle,
+            updatedDate:         req.body.updatedDate
         };
-        var id = req.query.id;
-        users.updateUser(user, id, function(user){
-            res.send(200, user);
-        });
-    });
-    api.get('/:id', function (req, res, next) {
-        var userId = req.query.id;
-        users.getUser(userId, function(data){
-            res.json(data);
-        });
+        var id = req.params.id;
+        users.updateUser(user, id).then(data=>{
+            res.status(200);
+            res.json(user);
+        })
+            .catch(err=>{
+                console.log(err);
+                res.status(500);
+            });
     });
     api.patch('/archive/:id', function (req, res, next) {
-        var userId = req.query.id;
-        users.archiveUser(userId, function(data){
-            res.json(data);
-        });
+        var userId = req.params.id;
+        users.archiveUser(userId).then(data=>{
+                res.status(200);
+                res.json({archived: userId});
+        })
+            .catch(err=>{
+                console.log(err);
+                res.status(500);
+            });
     });
     return api;
 })();

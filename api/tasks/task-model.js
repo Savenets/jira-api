@@ -1,42 +1,57 @@
 'use strict';
 module.exports = (function () {
-    const express = require('express');
-    const api = express.Router();
-    const config = require('../../config');
     const mongo = require('mongodb').MongoClient;
     const objectId = require('mongodb').ObjectID;
-    const methodOverride = require('method-override');
-    const bodyParser = require('body-parser');
-    api.use(methodOverride());
-    api.use(bodyParser.json());
-    api.use(bodyParser.urlencoded({extended: true}));
+    const db = require('../../db');
 
     const tasks =  {
-        getTasks: function getUsers(f){
-            var self = this;
-            mongo.connect(config.mongo, function(err, db) {
-                var gotten = db.collection('tasks').find();
-                gotten.forEach(function(doc, err) {
-                    self.tasksList.push(doc);
-                }, function() {
-                    db.close();
-                    f();
-                });
-            });
+        getTasks:
+            function(){
+                return db.then(db => db.collection('tasks').find())
+                    .then(data => data.toArray());
+            },
+        getTask:
+            function(id){
+                return db.then(db => db.collection('tasks').findOne({'_id': objectId(id)}))
         },
-        tasksList: [],
-        getTask: function(id, f){
-            mongo.connect(config.mongo, function (err, db) {
-                var ticket = db.collection('tasks').findOne({'_id': objectId(id)});
-                ticket.then(function (data) {
-                    db.close();
-                    f(data);
+        createTask:
+            function(task){
+                return db.then(db=> {db.collection('tasks').insert(task)})
+            },
+        updateTask:
+            function(task, id){
+                return db.then(db=>{
+                    db.collection('tasks').updateOne(
+                        {'_id': objectId(id)},
+                        {$set: task})
                 })
-                    .catch(function (error) {
-                       // res.end('something went wrong');
-                    });
-            });
-        }
+            },
+        addComment:
+            function(comment, taskId){
+                return db.then(db=> {
+                    db.collection('tasks').updateOne(
+                        {'_id': objectId(taskId)},
+                        {$push: {comments: comment}
+                        })
+                });
+            },
+        status:
+            function(ticketId, issueStatus){
+                return db.then(db=>{
+                    db.collection('tasks').updateOne(
+                        {'_id': objectId(ticketId)},
+                        {$set: {status: issueStatus}
+                        })
+                })
+            },
+        priority:
+            function(ticketId,issuePriority){
+                return db.then(db=>{
+                    db.collection('tasks').updateOne({'_id': objectId(ticketId)},
+                        {$set: {status: issuePriority}
+                        });
+                })
+            }
     };
     return tasks;
 })();
