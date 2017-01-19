@@ -68,7 +68,8 @@ module.exports = (function () {
     });
     // TODO
     // POST /tasks/:task_id/comments
-    api.post('/:taskId/comment', function (req, res) {
+    // stst
+    api.post('/:taskId/comments', function (req, res) {
         var comment = {
             commentBody: req.body.commentBody,
             createBy: req.body.createBy,
@@ -85,7 +86,7 @@ module.exports = (function () {
             });
     });
     // PATCH /tasks/:task_id/status
-    api.patch('/:taskId/:status', function (req, res) {
+    api.patch('/:taskId/status/:status', function (req, res) {
         const status =  req.params.status;
         const taskId = req.params.taskId;
 
@@ -98,7 +99,7 @@ module.exports = (function () {
             res.staus(500);
         });
     });
-    api.put('/:taskId/:priority', function (req, res) {
+    api.put('/:taskId/priority/:priority', function (req, res) {
         const priority =  req.params.priority;
         const taskId = req.params.taskId;
         tasks.priority(taskId,priority).then(() => {

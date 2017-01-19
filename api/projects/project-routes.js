@@ -1,7 +1,6 @@
 'use strict';
 module.exports = (function() {
-    const express = require('express');
-    const api = express.Router();
+    const api = require('express').Router();
     const projects = require('./project-model');
 
     api.get('/', function (req, res) {

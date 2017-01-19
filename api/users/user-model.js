@@ -42,6 +42,7 @@ module.exports = (function () {
             });
         },
         archiveUser: function(id){
+            //
             return db.then(db=>{
                 db.collection('users').updateOne(
                     {

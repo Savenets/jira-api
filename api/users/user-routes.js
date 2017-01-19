@@ -7,7 +7,8 @@ module.exports = (function() {
 
     api.get('/', function (req, res) {
         users.getUsers().then(data=>{
-            res.status(200);
+            //no need to sed status code
+            //res.status(200);
             res.json(data);
         })
             .catch(err=>{
@@ -90,6 +91,7 @@ module.exports = (function() {
             });
     });
     api.patch('/archive/:id', function (req, res) {
+        // fix for model ;
         var userId = req.params.id;
         users.archiveUser(userId).then(() => {
             res.status(200);
