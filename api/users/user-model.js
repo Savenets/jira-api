@@ -1,3 +1,18 @@
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+var UserSchema = new Schema({
+    FirstName: String,
+    LastName: String,
+    ContactEmail: String,
+    Password: String,
+    Title: String
+});
+module.exports = mongoose.model('User', UserSchema);
+
+
+
+/*
 'use strict';
 module.exports = (function () {
     const objectId = require('mongodb').ObjectID;
@@ -58,4 +73,5 @@ module.exports = (function () {
     return users;
 })();
 
+*/
 

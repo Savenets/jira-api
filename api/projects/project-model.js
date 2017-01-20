@@ -1,3 +1,24 @@
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+var ProjectSchema = new Schema({
+    Name: String,
+    Description: String,
+    Link: String,
+    createdBy: String,
+    users: {
+        type: Array,
+        unique:true,
+        index: true,
+        dropDups: true
+    },
+    createdDate: Date,
+    updatedDate: Date,
+    isActive: Boolean
+});
+module.exports = mongoose.model('Project', ProjectSchema);
+
+/*
 'use strict';
 module.exports = (function() {
     const objectId = require('mongodb').ObjectID;
@@ -48,4 +69,4 @@ module.exports = (function() {
     };
     return projects;
 })();
-
+*/
