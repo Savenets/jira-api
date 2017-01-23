@@ -2,7 +2,6 @@
 module.exports = (function() {
     const express = require('express');
     const api = express.Router();
-    const _ = require('lodash');
 
     const User = require('./user-model');
 
@@ -55,12 +54,12 @@ module.exports = (function() {
         let newUser = new User();
         console.log('user to be inserted');
 
-        newUser.FirstName =      req.body.FirstName;
-        newUser.LastName =       req.body.LastName;
-        newUser.ContactEmail =   req.body.ContactEmail;
-        newUser.Pass =           req.body.Pass;
-        newUser.Title =          req.body.Title;
-        newUser.registered =     req.body.registered;
+        newUser.firstName =      req.body.firstName;
+        newUser.lastName =       req.body.lastName;
+        newUser.contactEmail =   req.body.contactEmail;
+        newUser.password =       req.body.password;
+        newUser.title =          req.body.title;
+        newUser.registered =     new Date;
 
         newUser.save()
         .then(data => {
@@ -72,23 +71,26 @@ module.exports = (function() {
         });
     });
     api.put('/:id', function (req, res) {
-        var user = {
-            FirstName:       req.body.FirstName,
-            LastName:        req.body.LastName,
-            ContactEmail:    req.body.ContactEmail,
-            Pass:            req.body.Pass,
-            Title:           req.body.userTitle,
-            updatedDate:     req.body.updatedDate
-        };
-        var id = req.params.id;
-      /*  users.updateUser(user, id).then(()=>{
-            res.status(200);
-            res.json(user);
-        })
-            .catch(err=>{
+        User.findOneAndUpdate({
+            _id: req.params.id
+        },
+            {
+                $set: {
+                    firstName:       req.body.firstName,
+                    lastName:        req.body.lastName,
+                    contactEmail:    req.body.contactEmail,
+                    password:        req.body.password,
+                    title:           req.body.title,
+                    updatedDate:     new Date()
+                }
+            })
+            .then(user => {
+                res.json(user);
+            })
+            .catch(err => {
                 console.log(err);
                 res.status(500);
-            });*/
+            });
     });
     api.patch('/archive/:id', function (req, res) {
         // fix for model ;

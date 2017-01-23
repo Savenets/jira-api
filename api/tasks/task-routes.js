@@ -2,9 +2,130 @@
 module.exports = (function () {
     const express = require('express');
     const api = express.Router();
-    const tasks = require('./task-model');
+    const Task = require('./task-model');
+
 
     api.get('/', function (req, res) {
+        Task.find({}).then(data=> {
+            console.log('tasks printed');
+            res.status(200);
+            res.json(data);
+        })
+        .catch(err => {
+            console.log(err);
+            res.tatus(500);
+        });
+    });
+    api.get('/:id', function (req, res) {
+        Task.findOne({
+            _id: req.params.id
+        })
+        .then(data => {
+            res.json(data);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500);
+        });
+    });
+    api.post('/', function (req, res) {
+        console.log('task to be inserted');
+        const newTask = new Task();
+
+        newTask.title =           req.body.title,
+        newTask.body =            req.body.body,
+        newTask.createdBy =       req.body.createdBy,
+        newTask.assignedTo =      req.body.assignedTo,
+        newTask.type =            req.body.type,
+        newTask.status =          req.body.status,
+        newTask.archived =        req.body.archived,
+        newTask.comments =        [],
+        newTask.createdDate =     new Date();
+
+        newTask.save()
+        .then(data => {
+            res.json(data);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500);
+        });
+    });
+    api.put('/edit/:taskId', function (req, res) {
+        Task.findOneAndUpdate({
+            _id: req.params.taskId
+        },
+            {
+                $set: {
+                    title: req.body.title,
+                    body: req.body.body,
+                    type: req.body.type,
+                    status: req.body.status,
+                    createdBy: req.body.createdBy,
+                    assignedTo: req.body.assignedTo,
+                    isActive: req.body.isActive
+                }
+            },
+            {upsert: true})
+            .then(data => {
+                res.json(data);
+            })
+            .catch(err => {
+                console.log(err);
+                res.tatus(500);
+            });
+
+    });
+    api.post('/:taskId/comments', function (req, res) {
+        Task.findOneAndUpdate({
+            _id: req.params.taskId
+        },
+            {$push: {comments:
+            {
+                body: req.body.body,
+                createdBy: req.body.createdBy,
+                date: new Date()
+            }
+            }
+            })
+        .then(data => {
+            res.status(200);
+            res.json(data);
+        })
+        .catch(err=>{
+            console.log(err);
+            res.status(500);
+        });
+    });
+    api.patch('/:taskId/status/:status', function (req, res) {
+        Task.findOneAndUpdate({
+            _id: req.params.taskId
+        },
+            {$set: {status: req.params.status}
+            }
+        ).then(data => {
+            res.json(data);
+        }).catch(err=>{
+            console.log(err);
+            res.staus(500);
+        });
+    });
+    api.put('/:taskId/priority/:priority', function (req, res) {
+        Task.findOneAndUpdate({
+            _id: req.params.taskId
+        },
+            {$set: {priority: req.params.priority}
+            },
+            {upsert: true}
+        ).then(data => {
+            res.json(data);
+        }).catch(err=>{
+            console.log(err);
+            res.staus(500);
+        });
+    });
+
+   /* api.get('/', function (req, res) {
         tasks.getTasks().then(data=> {
             console.log('tasks printed');
             res.status(200);
@@ -109,7 +230,7 @@ module.exports = (function () {
             console.log(err);
             res.staus(500);
         });
-    });
+    });*/
     return api;
 })();
 
