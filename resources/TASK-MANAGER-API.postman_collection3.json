@@ -1,0 +1,700 @@
+{
+	"id": "f4f937b0-6371-c511-0701-f17605a66f1f",
+	"name": "TASK-MANAGER-API",
+	"description": "",
+	"order": [],
+	"folders": [
+		{
+			"owner": "1361569",
+			"lastUpdatedBy": "1361569",
+			"lastRevision": 913641137,
+			"id": "f19d41f7-e91e-be76-e608-a848523e4277",
+			"name": "projects",
+			"description": "",
+			"order": [
+				"5faf505b-3aef-a7b8-0f64-2b18f21e175e",
+				"ed0c9f64-0dcf-f269-a081-cadd0e7fdf95",
+				"91dc265d-4b5b-4a2f-0cc4-3430d1bc0da8",
+				"9ebd91bb-bfc3-b5c2-583a-a8b4958a1e6e",
+				"4f6b89e5-b925-b20e-0be7-2bb764dfa033",
+				"7ca23184-b0b6-2e13-0a9a-43053deb6e33"
+			],
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f"
+		},
+		{
+			"owner": "1361569",
+			"lastUpdatedBy": "1361569",
+			"lastRevision": 913669221,
+			"id": "d9b191e1-8eb6-7814-d1a6-cf633c37defb",
+			"name": "tasks",
+			"description": "",
+			"order": [
+				"14e65f2b-c39e-cfb8-7852-d3e1f77b31c7",
+				"2ccee81f-d143-4014-7d00-0725a52f6283",
+				"7f8784fd-42dc-6023-b6d1-7c7720947dea",
+				"4c86b84d-df9c-29fe-8355-cb7258e811c4",
+				"ca286fd9-4bd3-90e5-a740-5e9f188242b0",
+				"15d71974-8718-f776-c280-a4785171221c",
+				"f022bcd6-1d0a-8dd3-de53-c0a1b5f3c9cf"
+			],
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f"
+		},
+		{
+			"owner": "1361569",
+			"lastUpdatedBy": "1361569",
+			"lastRevision": 913619867,
+			"id": "84413097-06a8-f1b8-1328-ef2e8a69c064",
+			"name": "users",
+			"description": "",
+			"order": [
+				"e26b08f1-81fe-6c4e-06af-67120f6e8770",
+				"bda61429-0edf-5e54-85b4-effdacfce6b6",
+				"d9cd3a59-2830-1c34-5019-f384115ae2c7",
+				"3532bdd6-fffc-0a5b-4cc4-e3a46cb31993",
+				"207e0953-cf89-3b65-6cc0-16c97011f98f",
+				"4fcf3795-09bb-d58b-c334-08a1d974e91d",
+				"0e04309e-fe57-0783-3570-c067609e30b1"
+			],
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f"
+		}
+	],
+	"timestamp": 1483707179046,
+	"owner": "1361569",
+	"public": false,
+	"requests": [
+		{
+			"id": "0e04309e-fe57-0783-3570-c067609e30b1",
+			"headers": "",
+			"url": "{{url}}/users/archive/586531965868bd1d302137dc",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "PATCH",
+			"data": [
+				{
+					"key": "id",
+					"value": "586531965868bd1d302137dc",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484646617417,
+			"name": "{{url}}/users/archive",
+			"description": "",
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f"
+		},
+		{
+			"id": "14e65f2b-c39e-cfb8-7852-d3e1f77b31c7",
+			"headers": "",
+			"url": "{{url}}/tasks",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f",
+			"data": null,
+			"dataMode": "params",
+			"name": "{{url}}/tasks",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1483708045497,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "d9b191e1-8eb6-7814-d1a6-cf633c37defb"
+		},
+		{
+			"id": "15d71974-8718-f776-c280-a4785171221c",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"url": "{{url}}/tasks/5860dbfb09119d27f4f5ccb1/status/closed",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "PATCH",
+			"data": [
+				{
+					"key": "status",
+					"value": "opened",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "ticketId",
+					"value": "5860dbfb09119d27f4f5ccb1",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1485173598486,
+			"name": "{{url}}/tasks/status",
+			"description": "",
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f"
+		},
+		{
+			"id": "207e0953-cf89-3b65-6cc0-16c97011f98f",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"url": "{{url}}/users/",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "firstName",
+					"value": "Marta",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "lastName",
+					"value": "Nikolaevna",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "contactEmail",
+					"value": "Nikolaevna@gmail.com",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "1234567890333",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "title",
+					"value": "dev",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "registered",
+					"value": "new Date()",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1485176399728,
+			"name": "{{url}}/users/",
+			"description": "",
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f"
+		},
+		{
+			"id": "2ccee81f-d143-4014-7d00-0725a52f6283",
+			"headers": "",
+			"url": "{{url}}/tasks/5860dbfb09119d27f4f5ccb1",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484574999280,
+			"name": "{{url}}/tasks/id",
+			"description": "",
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f",
+			"responses": []
+		},
+		{
+			"id": "3532bdd6-fffc-0a5b-4cc4-e3a46cb31993",
+			"headers": "",
+			"url": "{{url}}/users/586531965868bd1d302137dc",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484644815333,
+			"name": "{{url}}/users/id/",
+			"description": "",
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f"
+		},
+		{
+			"id": "4c86b84d-df9c-29fe-8355-cb7258e811c4",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"url": "{{url}}/tasks/5860dbfb09119d27f4f5ccb1",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "PUT",
+			"data": [
+				{
+					"key": "issueTitle",
+					"value": "Check title of image12asda",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "issueBody",
+					"value": "check this body e45",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "createdBy",
+					"value": "Nickolay",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "assignedTo",
+					"value": "Ogira",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "issueType",
+					"value": "requirement",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "updatedDate",
+					"value": "new Date()",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484576872493,
+			"name": "{{url}}/tasks/",
+			"description": "",
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f",
+			"responses": []
+		},
+		{
+			"id": "4f6b89e5-b925-b20e-0be7-2bb764dfa033",
+			"headers": "",
+			"url": "http://localhost:4000/projects/586529d86b054a1bf8707d65/archive",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "PATCH",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484929302716,
+			"name": "{{url}}/projects/archive",
+			"description": "",
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f"
+		},
+		{
+			"id": "4fcf3795-09bb-d58b-c334-08a1d974e91d",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"url": "{{url}}/users/586531965868bd1d302137dc",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "PUT",
+			"data": [
+				{
+					"key": "userFirstName",
+					"value": "Alina123",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "userLastName",
+					"value": "Milskaya",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "userContactEmail",
+					"value": "Nikolaevna@gmail.com",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "userPass",
+					"value": "1234567890333",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "userTitle",
+					"value": "dev",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "id",
+					"value": "586531965868bd1d302137dc",
+					"type": "text",
+					"enabled": false
+				}
+			],
+			"dataMode": "urlencoded",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484647635216,
+			"name": "{{url}}/users/id",
+			"description": "",
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f"
+		},
+		{
+			"folder": "f19d41f7-e91e-be76-e608-a848523e4277",
+			"id": "5faf505b-3aef-a7b8-0f64-2b18f21e175e",
+			"name": "{{url}}/projects",
+			"dataMode": "params",
+			"data": null,
+			"rawModeData": null,
+			"descriptionFormat": "html",
+			"description": "",
+			"headers": "",
+			"method": "GET",
+			"pathVariables": {},
+			"url": "{{url}}/projects",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f"
+		},
+		{
+			"id": "7ca23184-b0b6-2e13-0a9a-43053deb6e33",
+			"headers": "",
+			"url": "http://localhost:4000/projects/586fa371a0d11119580caaa1/notify/586531965868bd1d302137dc",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "PUT",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484929313848,
+			"name": "{{url}}/projects/notify",
+			"description": "",
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f"
+		},
+		{
+			"id": "7f8784fd-42dc-6023-b6d1-7c7720947dea",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"url": "{{url}}/tasks",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "title",
+					"value": "create new ddves",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "body",
+					"value": "loading icon won't stopww",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "createdBy",
+					"value": "Liga",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "assignedTo",
+					"value": "Ivanov",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "issueType",
+					"value": "bug",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "createdDate",
+					"value": "new Date()",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1485166216103,
+			"name": "{{url}}/tasks",
+			"description": "",
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f",
+			"responses": []
+		},
+		{
+			"id": "91dc265d-4b5b-4a2f-0cc4-3430d1bc0da8",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"url": "{{url}}/projects/",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "Name",
+					"value": "new project chewfeas sa",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "Description",
+					"value": "Simple jira proj2",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "Link",
+					"value": "https://docs.mongodb.com/v3.2/reference/method/db.createCollection/",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "users",
+					"value": "['nick saven', 'lina Aura']",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "createdDate",
+					"value": "new Date()",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "isActive",
+					"value": "true",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484929130612,
+			"name": "{{url}}/projects/",
+			"description": "",
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f"
+		},
+		{
+			"id": "9ebd91bb-bfc3-b5c2-583a-a8b4958a1e6e",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"url": "{{url}}/projects/",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "PUT",
+			"data": [
+				{
+					"key": "projectName",
+					"value": "January first project use",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "projectDescription",
+					"value": "Simple jira proj",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "projectLink",
+					"value": "https://docs.mongodb.com/v3.2/reference/method/db.createCollection/",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "users",
+					"value": "['nick saven', 'lina Aura']",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "createdDate",
+					"value": "new Date()",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "isActive",
+					"value": "true",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "id",
+					"value": "586529d86b054a1bf8707d65",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484576899741,
+			"name": "{{url}}/projects/edit/id",
+			"description": "",
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f"
+		},
+		{
+			"id": "bda61429-0edf-5e54-85b4-effdacfce6b6",
+			"headers": "",
+			"url": "{{url}}/users/all-users",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484933568146,
+			"name": "{{url}}/users/all-users",
+			"description": "",
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f"
+		},
+		{
+			"id": "ca286fd9-4bd3-90e5-a740-5e9f188242b0",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"url": "{{url}}/tasks/5860dbfb09119d27f4f5ccb1/comments",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "body",
+					"value": "what browser is this ies d dasfasd fasue2",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "createdBy",
+					"value": "Nick",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "date",
+					"value": " Date.now()",
+					"type": "text",
+					"enabled": false
+				}
+			],
+			"dataMode": "urlencoded",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1485173147059,
+			"name": "{{url}}/tasks/comment",
+			"description": "",
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f"
+		},
+		{
+			"folder": "84413097-06a8-f1b8-1328-ef2e8a69c064",
+			"id": "d9cd3a59-2830-1c34-5019-f384115ae2c7",
+			"name": "{{url}}/users/archived",
+			"dataMode": "params",
+			"data": null,
+			"rawModeData": null,
+			"descriptionFormat": "html",
+			"description": "",
+			"headers": "",
+			"method": "GET",
+			"pathVariables": {},
+			"url": "{{url}}/users/",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f"
+		},
+		{
+			"folder": "84413097-06a8-f1b8-1328-ef2e8a69c064",
+			"id": "e26b08f1-81fe-6c4e-06af-67120f6e8770",
+			"name": "{{url}}/users/",
+			"dataMode": "params",
+			"data": null,
+			"rawModeData": null,
+			"descriptionFormat": "html",
+			"description": "",
+			"headers": "",
+			"method": "GET",
+			"pathVariables": {},
+			"url": "{{url}}/users/",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f"
+		},
+		{
+			"id": "ed0c9f64-0dcf-f269-a081-cadd0e7fdf95",
+			"headers": "",
+			"url": "{{url}}/projects/586529d86b054a1bf8707d65",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1484575286328,
+			"name": "{{url}}/projects/project",
+			"description": "",
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f"
+		},
+		{
+			"id": "f022bcd6-1d0a-8dd3-de53-c0a1b5f3c9cf",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"url": "{{url}}/tasks/5860dbfb09119d27f4f5ccb1/priority/major",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "PUT",
+			"data": [
+				{
+					"key": "ticketId",
+					"value": "5860dbfb09119d27f4f5ccb1",
+					"type": "text",
+					"enabled": false
+				},
+				{
+					"key": "issuePriority",
+					"value": "major",
+					"type": "text",
+					"enabled": false
+				}
+			],
+			"dataMode": "urlencoded",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1485173888326,
+			"name": "{{url}}/tasks/priority",
+			"description": "",
+			"collectionId": "f4f937b0-6371-c511-0701-f17605a66f1f"
+		}
+	]
+}
