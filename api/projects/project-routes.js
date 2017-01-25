@@ -67,7 +67,7 @@ module.exports = (function () {
                     isActive: req.body.isActive
                 }
             },
-        {upsert: true})
+        { upsert: true })
         .then(project => {
             res.json(project);
         })

@@ -36,16 +36,16 @@ module.exports = (function () {
         newTask.status =          req.body.status,
         newTask.archived =        req.body.archived,
         newTask.comments =        [],
-        newTask.createdDate =     new Date();
+        newTask.createdDate =     new Date(); // TODO: Use Mongoose
 
         newTask.save()
-        .then(data => {
-            res.json(data);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500);
-        });
+            .then(data => {
+                res.json(data);
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500);
+            });
     });
     api.put('/edit/:taskId', function (req, res) {
         Task.findOneAndUpdate({
