@@ -51,15 +51,15 @@ module.exports = (function () {
         Task.findOneAndUpdate({
             _id: req.params.taskId
         }, {
-        $set: {
-                    title: req.body.title,
-                    body: req.body.body,
-                    type: req.body.type,
-                    status: req.body.status,
-                    createdBy: req.body.createdBy,
-                    assignedTo: req.body.assignedTo,
-                    isActive: req.body.isActive
-                }
+            $set: {
+                title: req.body.title,
+                body: req.body.body,
+                type: req.body.type,
+                status: req.body.status,
+                createdBy: req.body.createdBy,
+                assignedTo: req.body.assignedTo,
+                isActive: req.body.isActive
+            }
         },
         {upsert: true})
         .then(data => {

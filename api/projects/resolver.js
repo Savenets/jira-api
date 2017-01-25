@@ -7,7 +7,7 @@ var projectResolver = {
             _id: userId
         }).then(({_id:id, name}) => {
             return {id, name};
-        })
+        });
     }
 };
 

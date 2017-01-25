@@ -31,7 +31,7 @@ module.exports = (function () {
         });
     });
     api.post('/', function (req, res) {
-        let user
+
 
         let newProject = new Project();
         console.log('projects to be inserted');
@@ -57,16 +57,16 @@ module.exports = (function () {
         Project.findOneAndUpdate({
             _id: req.params.id
         },
-        {
-            $set: {
-                Name: req.body.projectName,
-                Description: req.body.projectDescription,
-                Link: req.body.projectLink,
-                users: [],
-                updatedDate: new Date(),
-                isActive: req.body.isActive
-            }
-        },
+            {
+                $set: {
+                    Name: req.body.projectName,
+                    Description: req.body.projectDescription,
+                    Link: req.body.projectLink,
+                    users: [],
+                    updatedDate: new Date(),
+                    isActive: req.body.isActive
+                }
+            },
         {upsert: true})
         .then(project => {
             res.json(project);
