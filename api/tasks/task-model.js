@@ -6,8 +6,14 @@ const db = require('../../db');
 var TaskSchema = new Schema({
     title:          String,
     body:           String,
-    createdBy:      String,
-    assignedTo:     String,
+    createdBy:      [{
+        _id:  Number,
+        name: String
+    }],
+    assignedTo:      [{
+        _id:  Number,
+        name: String
+    }],
     type:           String,
     status:         String,
     archived:       String,

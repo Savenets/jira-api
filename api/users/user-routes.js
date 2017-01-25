@@ -4,6 +4,7 @@ module.exports = (function() {
     const api = express.Router();
 
     const User = require('./user-model');
+    const resolver = require('./user-routes');
 
     api.get('/', function (req, res) {
         User.find({archived: {$exists:false}})
@@ -93,6 +94,7 @@ module.exports = (function() {
             });
     });
     api.patch('/archive/:id', function (req, res) {
+        let usersTasks = resolver.ifUserHasTasks();
         // fix for model ;
         var userId = req.params.id;
         /*users.archiveUser(userId).then(() => {

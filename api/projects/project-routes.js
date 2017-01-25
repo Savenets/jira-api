@@ -8,11 +8,12 @@ module.exports = (function () {
     api.get('/', function (req, res) {
         console.log('getting projects');
         Project.find({})
-            .exec()
             .then(projects => {
                 res.json(projects);
             })
             .catch(err => {
+                // make error handler separation //////////// sanoco pay API!!!
+                console.log(err);
                 res.send('error occured');
             });
     });
@@ -30,6 +31,8 @@ module.exports = (function () {
         });
     });
     api.post('/', function (req, res) {
+        let user
+
         let newProject = new Project();
         console.log('projects to be inserted');
 
@@ -54,16 +57,16 @@ module.exports = (function () {
         Project.findOneAndUpdate({
             _id: req.params.id
         },
-            {
-                $set: {
-                    Name: req.body.projectName,
-                    Description: req.body.projectDescription,
-                    Link: req.body.projectLink,
-                    users: [],
-                    updatedDate: new Date(),
-                    isActive: req.body.isActive
-                }
-            },
+        {
+            $set: {
+                Name: req.body.projectName,
+                Description: req.body.projectDescription,
+                Link: req.body.projectLink,
+                users: [],
+                updatedDate: new Date(),
+                isActive: req.body.isActive
+            }
+        },
         {upsert: true})
         .then(project => {
             res.json(project);
@@ -74,12 +77,12 @@ module.exports = (function () {
         });
     });
     api.put('/:projectID/notify/:userID', function (req, res) {
-        let user = resolver.getUserNameById(req.params.userID);
-        user.then(data=>{
+        resolver.getUserNameById(req.params.userID)
+        .then(user=>{
             Project.findOneAndUpdate({
                 _id: req.params.projectID
             },
-            {$addToSet: {users: data}},
+            {$addToSet: {users: user}},
             {upsert: true}
             )
             .then(project => {

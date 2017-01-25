@@ -17,12 +17,8 @@ module.exports = (function () {
         });
     });
     api.get('/:id', function (req, res) {
-        Task.findOne({
-            _id: req.params.id
-        })
-        .then(data => {
-            res.json(data);
-        })
+        Task.findOne({ _id: req.params.id })
+        .then(data => res.json(data))
         .catch(err => {
             console.log(err);
             res.status(500);
@@ -54,9 +50,8 @@ module.exports = (function () {
     api.put('/edit/:taskId', function (req, res) {
         Task.findOneAndUpdate({
             _id: req.params.taskId
-        },
-            {
-                $set: {
+        }, {
+        $set: {
                     title: req.body.title,
                     body: req.body.body,
                     type: req.body.type,
@@ -65,15 +60,15 @@ module.exports = (function () {
                     assignedTo: req.body.assignedTo,
                     isActive: req.body.isActive
                 }
-            },
-            {upsert: true})
-            .then(data => {
-                res.json(data);
-            })
-            .catch(err => {
-                console.log(err);
-                res.tatus(500);
-            });
+        },
+        {upsert: true})
+        .then(data => {
+            res.json(data);
+        })
+        .catch(err => {
+            console.log(err);
+            res.tatus(500);
+        });
 
     });
     api.post('/:taskId/comments', function (req, res) {
