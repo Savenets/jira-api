@@ -6,8 +6,9 @@ var UserSchema = new Schema({
     lastName: String,
     contactEmail: String,
     password: String,
-    title: String,
-    registered: Date
+    role: String,
+    profileImg: String,
+    registered: { type: Date, default: Date.now }
 });
 module.exports = mongoose.model('User', UserSchema);
 

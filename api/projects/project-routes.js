@@ -2,110 +2,86 @@
 module.exports = (function () {
     const _ = require('lodash');
     const api = require('express').Router();
+    const repo = require('./repo');
     const Project = require('./project-model');
-    const resolver = require('./resolver');
 
-    api.get('/', function (req, res) {
+    api.get('/', function (req, res, next) {
         console.log('getting projects');
-        Project.find({})
+        repo.getAllProjects()
             .then(projects => {
                 res.json(projects);
             })
             .catch(err => {
-                // make error handler separation //////////// sanoco pay API!!!
-                console.log(err);
-                res.send('error occured');
+                // make error handler separation //////////// sanoco pay API!!!ddd
+                next(err);
             });
     });
-    api.get('/:id', function (req, res) {
-        Project.findOne({
-            _id: req.params.id
-        })
-        .exec()
+    api.get('/:id', function (req, res, next) {
+        //return next(new Error('super secret error '));
+
+
+        repo.getProjectById(req.params.id)
         .then(project => {
             res.json(project);
         })
         .catch(err => {
-            console.log(err);
-            res.status(500);
+            next(err);
         });
     });
-    api.post('/', function (req, res) {
-
-
-        let newProject = new Project();
-        console.log('projects to be inserted');
-
-        newProject.Name = req.body.Name;
-        newProject.Description = req.body.Description;
-        newProject.Link = req.body.Link;
-        newProject.users = [];
-        newProject.createdDate = new Date();
-        newProject.updatedDate = '';
-        newProject.isActive = true;
-
-        newProject.save()
-            .then(project => {
-                res.json(project);
-            })
-            .catch(err => {
-                console.log(err);
-                res.status(500);
-            });
-    });
-    api.put('/edit/:id', function (req, res) {
-        Project.findOneAndUpdate({
-            _id: req.params.id
-        },
-            {
-                $set: {
-                    Name: req.body.projectName,
-                    Description: req.body.projectDescription,
-                    Link: req.body.projectLink,
-                    users: [],
-                    updatedDate: new Date(),
-                    isActive: req.body.isActive
-                }
-            },
-        { upsert: true })
+    api.post('/', function (req, res, next) {
+        let np = {
+            name: req.body.name,
+            description: req.body.description,
+            link: req.body.link,
+            users: [],
+            createdDate: new Date(),
+            updatedDate: '',
+            isActive: true
+        };
+        repo.createNewProject(np)
         .then(project => {
             res.json(project);
         })
         .catch(err => {
-            console.log(err);
-            res.status(500);
+            next(err);
         });
     });
-    api.put('/:projectID/notify/:userID', function (req, res) {
-        resolver.getUserNameById(req.params.userID)
+    api.put('/edit/:id', function (req, res, next) {
+        let project = {
+            name: req.body.name,
+            description: req.body.description,
+            link: req.body.link,
+            users: [],
+            isActive: req.body.isActive,
+            profileImg: req.body.profileImg
+        };
+        repo.updateProject(req.params.id, project)
+        .then(project => {
+            res.json(project);
+        })
+        .catch(err => {
+            next(err);
+        });
+    });
+    api.put('/:projectID/notify/:userID', function (req, res, next) {
+        repo.getUserNameById(req.params.userID)
         .then(user=>{
-            Project.findOneAndUpdate({
-                _id: req.params.projectID
-            },
-            {$addToSet: {users: user}},
-            {upsert: true}
-            )
+            repo.addUserToNotifyList(req.params.projectID, user)
             .then(project => {
                 res.json(project);
             })
             .catch(err => {
-                console.log(err);
-                res.status(500);
+                next(err);
             });
         });
     });
-    api.patch('/:id/archive', function (req, res) {
-        Project.findOneAndUpdate({
-            '_id': req.params.id
-        },
-            {$set: {isActive: false}}
-        )
+    api.patch('/:projectID/archive', function (req, res, next) {
+        repo.archiveProject(req.params.projectID)
         .then(data=>{
             res.json(data);
         })
         .catch(err => {
-            console.log(err);
-            res.status(500);
+            next(err);
         });
     });
     return api;

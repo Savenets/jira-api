@@ -16,8 +16,24 @@ app.use('/tasks', tasks);
 app.use('/projects', projects);
 app.use('/users', users);
 
+app.use((err, req, res, next) => {
+    console.error('STACK TRACE', err.stack);
+    const status = err.status || 500;
+    res
+        .status(status)
+        .json({
+            success: false, //take into consideration;
+            reason: {
+                code: err.code,
+                message: err.message,
+                fields: err.fields,
+                explanation: err.explanation,
+                response: err.response
+            }
+        });
+});
 console.log('process.env.NODE_ENV = ' + process.env.NODE_ENV);
-console.log('port is' +  config.port);
-console.log('list to port 4000');
 
-app.listen(config.port);
+const server = app.listen(config.port, function(){
+    console.log('app listens to: ' + server.address().port);
+});

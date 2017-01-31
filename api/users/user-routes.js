@@ -59,7 +59,7 @@ module.exports = (function() {
         newUser.lastName =       req.body.lastName;
         newUser.contactEmail =   req.body.contactEmail;
         newUser.password =       req.body.password;
-        newUser.title =          req.body.title;
+        newUser.role =           req.body.role;
         newUser.registered =     new Date;
 
         newUser.save()
