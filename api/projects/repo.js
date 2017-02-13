@@ -1,7 +1,7 @@
 const User = require('../users/user-model');
 const Project = require('./project-model');
 
-var projectResolver = {
+var repo = {
     verifyPrject: function(projId){
 
     },
@@ -42,7 +42,7 @@ var projectResolver = {
                     users:        project.users,
                     isActive:     project.isActive,
                     profileImg:   project.profileImg,
-                    updatedDate:   new Date()  // ask Igor or Kostia if there is a way in mongo to trigger automatic update on document change!!1 without passing it in set
+                    updatedDate:   new Date()
                 }
             },
             { upsert: true });
@@ -64,4 +64,4 @@ var projectResolver = {
     }
 };
 
-module.exports = projectResolver;
+module.exports = repo;

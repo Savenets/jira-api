@@ -3,7 +3,9 @@ module.exports = (function () {
     const _ = require('lodash');
     const api = require('express').Router();
     const repo = require('./repo');
-    const Project = require('./project-model');
+
+    const AppError = require('../errors/AppError');
+    const ItemNotFound = require('../errors/ItemNotFound');
 
     api.get('/', function (req, res, next) {
         console.log('getting projects');
@@ -21,12 +23,13 @@ module.exports = (function () {
 
 
         repo.getProjectById(req.params.id)
-        .then(project => {
+        .then((project) => {
             res.json(project);
         })
-        .catch(err => {
-            next(err);
-        });
+        .catch((err) => {
+            next(new ItemNotFound({message: 'There is no suc a project', status: false, errorIn: 'project'}));
+
+        });// the savem as catche(err => next(err));
     });
     api.post('/', function (req, res, next) {
         let np = {
@@ -42,9 +45,7 @@ module.exports = (function () {
         .then(project => {
             res.json(project);
         })
-        .catch(err => {
-            next(err);
-        });
+        .catch(next);
     });
     api.put('/edit/:id', function (req, res, next) {
         let project = {
