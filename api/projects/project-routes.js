@@ -43,7 +43,7 @@ module.exports = (function () {
             updatedDate: '',
             isActive: true
         };
-        logger.debug(np.name + " is being created");
+        logger.debug(np.name + ' is being created');
         repo.createNewProject(np)
         .then(project => {
             res.json(project);
