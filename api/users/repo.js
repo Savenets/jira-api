@@ -2,7 +2,7 @@ const User = require('../users/user-model');
 const Project = require('../projects/project-model');
 
 
-var userResolver = {
+const userResolver = {
     getUsers: function(){
         return User.find({
             archived: {$exists:false}
@@ -49,9 +49,6 @@ var userResolver = {
                 }
             });
     },
-
-
-
     ifUserHasTasks: function (useName) {
         return User.find({
             assignedTo: useName

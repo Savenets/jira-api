@@ -7,8 +7,11 @@ module.exports = (function () {
     const AppError = require('../errors/AppError');
     const ItemNotFound = require('../errors/ItemNotFound');
 
+    const logger = require( '../logger.js' );
+
+
     api.get('/', function (req, res, next) {
-        console.log('getting projects');
+        logger.debug( 'getting all the projects' );
         repo.getAllProjects()
             .then(projects => {
                 res.json(projects);
@@ -19,9 +22,7 @@ module.exports = (function () {
             });
     });
     api.get('/:id', function (req, res, next) {
-        //return next(new Error('super secret error '));
-
-
+        logger.debug( 'getting project by id' );
         repo.getProjectById(req.params.id)
         .then((project) => {
             res.json(project);
@@ -42,7 +43,7 @@ module.exports = (function () {
             updatedDate: '',
             isActive: true
         };
-        console.log(np.users.firstName);
+        logger.debug(np.name + " is being created");
         repo.createNewProject(np)
         .then(project => {
             res.json(project);
