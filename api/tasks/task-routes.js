@@ -2,122 +2,78 @@
 module.exports = (function () {
     const express = require('express');
     const api = express.Router();
-    const Task = require('./task-model');
+    const repo = require('./repo');
+    const AppError = require('../errors/AppError');
+    const ItemNotFound = require('../errors/ItemNotFound');
 
-
-    api.get('/', function (req, res) {
-        Task.find({}).then(data=> {
-            console.log('tasks printed');
-            res.status(200);
-            res.json(data);
-        })
+    api.get('/', function (req, res, next) {
+        repo.getAllTasks()
+        .then(tasks => res.json(tasks))
         .catch(err => {
-            console.log(err);
-            res.tatus(500);
+            next(new ItemNotFound('tasks not found',{message: 'There is no suc a task', status: false, errorIn: 'tasks'}));
         });
     });
-    api.get('/:id', function (req, res) {
-        Task.findOne({ _id: req.params.id })
-        .then(data => res.json(data))
-        .catch(err => {
-            console.log(err);
-            res.status(500);
-        });
+    api.get('/:id', function (req, res, next) {
+        repo.getTaskById(req.params.id)
+        .then(task => res.json(task))
+        .catch(err => next(err));
     });
-    api.post('/', function (req, res) {
-        console.log('task to be inserted');
-        const newTask = new Task();
-
-        newTask.title =           req.body.title,
-        newTask.body =            req.body.body,
-        newTask.createdBy =       req.body.createdBy,
-        newTask.assignedTo =      req.body.assignedTo,
-        newTask.type =            req.body.type,
-        newTask.status =          req.body.status,
-        newTask.archived =        req.body.archived,
-        newTask.comments =        [],
-        newTask.createdDate =     new Date(); // TODO: Use Mongoose
-
-        newTask.save()
-            .then(data => {
-                res.json(data);
-            })
-            .catch(err => {
-                console.log(err);
-                res.status(500);
-            });
+    api.post('/', function (req, res, next) {
+        const newTask = {
+            title :           req.body.title,
+            body :            req.body.body,
+            createdBy :       req.body.createdBy,
+            assignedTo :      req.body.assignedTo,
+            type :            req.body.type,
+            status :          req.body.status,
+            archived :        req.body.archived,
+            comments :        []
+        };
+         //console.log(newTask);
+        repo.createTask(newTask)
+            .then(task => res.json(task))
+            .catch(err => next(err));
     });
-    api.put('/edit/:taskId', function (req, res) {
-        Task.findOneAndUpdate({
-            _id: req.params.taskId
-        }, {
-            $set: {
-                title: req.body.title,
-                body: req.body.body,
-                type: req.body.type,
-                status: req.body.status,
-                createdBy: req.body.createdBy,
-                assignedTo: req.body.assignedTo,
-                isActive: req.body.isActive
-            }
-        },
-        {upsert: true})
-        .then(data => {
-            res.json(data);
-        })
-        .catch(err => {
-            console.log(err);
-            res.tatus(500);
-        });
-
+    api.put('/edit/:taskId', function (req, res, next) {
+        const taskId = req.params.taskId;
+        const taskToUpdate = {
+            title :           req.body.title,
+            body :            req.body.body,
+            createdBy :       req.body.createdBy,
+            assignedTo :      req.body.assignedTo,
+            type :            req.body.type,
+            status :          req.body.status,
+            archived :        req.body.archived,
+            comments :        req.body.comments
+        };
+        repo.updateTask(taskId, taskToUpdate)
+            .then(task => res.json(task))
+            .catch(err => next(err));
     });
-    api.post('/:taskId/comments', function (req, res) {
-        Task.findOneAndUpdate({
-            _id: req.params.taskId
-        },
-            {$push: {comments:
-            {
-                body: req.body.body,
-                createdBy: req.body.createdBy,
-                date: new Date()
-            }
-            }
-            })
-        .then(data => {
-            res.status(200);
-            res.json(data);
-        })
-        .catch(err=>{
-            console.log(err);
-            res.status(500);
-        });
+    api.post('/:taskId/comments', function (req, res, next) {
+        const id = req.body.id;
+        const comment = {
+            body: req.body.body,
+            createdBy: req.body.createdBy,
+            date: new Date()
+        };
+        repo.addComment(id, comment)
+            .then(data => res.json(data))
+            .catch(next);
     });
-    api.patch('/:taskId/status/:status', function (req, res) {
-        Task.findOneAndUpdate({
-            _id: req.params.taskId
-        },
-            {$set: {status: req.params.status}
-            }
-        ).then(data => {
-            res.json(data);
-        }).catch(err=>{
-            console.log(err);
-            res.staus(500);
-        });
+    api.patch('/:taskId/status/:status', function (req, res, next) {
+        const id = req.params.taskId;
+        const status = req.params.status;
+        repo.changeStatus(id, status)
+            .then(data => res.json(data))
+            .catch(next);
     });
-    api.put('/:taskId/priority/:priority', function (req, res) {
-        Task.findOneAndUpdate({
-            _id: req.params.taskId
-        },
-            {$set: {priority: req.params.priority}
-            },
-            {upsert: true}
-        ).then(data => {
-            res.json(data);
-        }).catch(err=>{
-            console.log(err);
-            res.staus(500);
-        });
+    api.put('/:taskId/priority/:priority', function (req, res, next) {
+        const id = req.params.taskId;
+        const priority = req.params.priority;
+        repo.setPriority(id, priority)
+            .then(data => res.json(data))
+            .catch(next);
     });
 
    /* api.get('/', function (req, res) {

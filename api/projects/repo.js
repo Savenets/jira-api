@@ -24,10 +24,10 @@ var repo = {
         const newProject = new Project();
         newProject.name =         project.name;
         newProject.description =  project.description;
+        newProject.createdBy =    project.createdBy;
         newProject.link =         project.link;
         newProject.users =        project.users;
         newProject.isActive =     project.isActive;
-
         return newProject.save();
     },
     updateProject: function(id,project){

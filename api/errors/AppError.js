@@ -1,12 +1,10 @@
 module.exports = class AppError extends Error {
-    constructor (status) {
+    constructor (message, options) {
         // Calling parent constructor of base Error class.
-        super();
+        super(message);
         // Capturing stack trace, excluding constructor call from it.
-        Error.captureStackTrace(this, this.constructor);
-        this.name = 'CustomErrorHandler';
-        this.status = status || 500;
-        console.log( 'stauts is ' + this.status);
+        //Error.captureStackTrace(this, this.constructor);
+        this.options = Object.assign({status:500}, options);
     }
 };
 

@@ -7,21 +7,21 @@ var TaskSchema = new Schema({
     title:          String,
     body:           String,
     createdBy:      [{
-        _id:  Number,
-        name: String
+        /*_id:  Number,
+        name: String*/
     }],
     assignedTo:      [{
-        _id:  Number,
-        name: String
+       /* _id:  Number,
+        name: String*/
     }],
     type:           String,
     status:         String,
     archived:       String,
     priority:       String,
     comments:       [{
-        body: String,
+       /* body: String,
         createdBy: String,
-        date: {type:Date, default:Date.now()}
+        date: {type:Date, default:Date.now()}*/
     }],
     createdDate:    Date
 });

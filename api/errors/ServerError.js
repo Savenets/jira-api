@@ -1,6 +1,5 @@
 module.exports = class ServerError extends require('./AppError') {
-    constructor (message, extra) {
-        super(message || 'Something went wrong', 500);
-        this.extra = extra;
+    constructor (message = 'something went wrong', options) {
+        super(message , options);
     }
 };

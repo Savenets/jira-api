@@ -27,7 +27,7 @@ module.exports = (function () {
             res.json(project);
         })
         .catch((err) => {
-            next(new ItemNotFound({message: 'There is no suc a project', status: false, errorIn: 'project'}));
+            next(new ItemNotFound('project not found',{message: 'There is no suc a project', status: false, errorIn: 'project'}));
 
         });// the savem as catche(err => next(err));
     });
@@ -35,12 +35,14 @@ module.exports = (function () {
         let np = {
             name: req.body.name,
             description: req.body.description,
+            createdBy: req.body.createdBy,
             link: req.body.link,
-            users: [],
+            users: req.body.users,
             createdDate: new Date(),
             updatedDate: '',
             isActive: true
         };
+        console.log(np.users.firstName);
         repo.createNewProject(np)
         .then(project => {
             res.json(project);
@@ -52,7 +54,7 @@ module.exports = (function () {
             name: req.body.name,
             description: req.body.description,
             link: req.body.link,
-            users: [],
+            users: req.body.users,
             isActive: req.body.isActive,
             profileImg: req.body.profileImg
         };

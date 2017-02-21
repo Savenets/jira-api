@@ -6,7 +6,7 @@ var UserSchema = new Schema({
     lastName: String,
     contactEmail: String,
     password: String,
-    role: String,
+    title: String,
     profileImg: String,
     registered: { type: Date, default: Date.now }
 });

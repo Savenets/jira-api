@@ -6,15 +6,12 @@ var ProjectSchema = new Schema({
     description: String,
     link: String,
     createdBy: [{
+        /*_id:  String,
         firstName: String,
         lastName: String,
-        role: String
+        role: String*/
     }],
-    users: [{
-        firstName: String,
-        lastName: String,
-        role: String
-    }],
+    users: [{}],
     createdDate: {
         type: Date,
         default: Date.now
