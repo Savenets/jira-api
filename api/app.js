@@ -1,7 +1,10 @@
 const express = require('express');
 const _ = require('lodash');
 const app = new express();
-const config = require('../config');
+//const config = require('../config');
+//const config = require('../configer');
+const config = require('dotenv').config({path: '../.env'});
+
 
 const tasks = require('./tasks/task-routes');
 const projects = require('./projects/project-routes');
@@ -42,6 +45,6 @@ app.use((err, req, res, next) => {
 });
 console.log('process.env.NODE_ENV = ' + process.env.NODE_ENV);
 
-const server = app.listen(config.port, function(){
+const server = app.listen(process.env.PORT, function(){
     console.log('app listens to: ' + server.address().port);
 });

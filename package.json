@@ -14,11 +14,14 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "dotenv": "^4.0.0",
     "express": "4.14.0",
     "lodash": "^4.17.4",
     "method-override": "*",
     "mongoose": "^4.7.7",
+    "mongoose-validate": "0.0.5",
     "monk": "3.1.2",
+    "nconf": "^0.8.4",
     "path": "^0.12.7",
     "querystring": "^0.2.0",
     "winston": "^2.3.1"

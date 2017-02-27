@@ -1,11 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-//const db = require('../db');
-
 
 var TaskSchema = new Schema({
-    title:          String,
-    body:           String,
+    title: {
+        type: String,
+        required:true
+    },
+    body: {
+        type: String,
+        required:true
+    },
     createdBy:      [{
         /*_id:  Number,
         name: String*/
@@ -14,10 +18,22 @@ var TaskSchema = new Schema({
        /* _id:  Number,
         name: String*/
     }],
-    type:           String,
-    status:         String,
-    archived:       String,
-    priority:       String,
+    type:   {
+        type: String,
+        required:true
+    },
+    status:  {
+        type: String,
+        required:true
+    },
+    archived:  {
+        type: String,
+        required:true
+    },
+    priority:  {
+        type: String,
+        required:true
+    },
     comments:       [{
        /* body: String,
         createdBy: String,

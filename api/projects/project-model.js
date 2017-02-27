@@ -1,10 +1,20 @@
 var mongoose = require('mongoose');
+var validate = require('mongoose-validate');
 var Schema = mongoose.Schema;
 
 var ProjectSchema = new Schema({
-    name: String,
-    description: String,
-    link: String,
+    name: {
+        type:String,
+        required: true
+    },
+    description: {
+        type:String,
+        required: true
+    },
+    link:{
+        type:String,
+        required: true
+    },
     createdBy: [{
         /*_id:  String,
         firstName: String,
@@ -14,7 +24,8 @@ var ProjectSchema = new Schema({
     users: [{}],
     createdDate: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        required: true
     },
     updatedDate: {
         type: Date,

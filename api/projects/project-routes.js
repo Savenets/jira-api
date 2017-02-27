@@ -22,7 +22,7 @@ module.exports = (function () {
             });
     });
     api.get('/:id', function (req, res, next) {
-        logger.debug( 'getting project by id' );
+        logger.debug( 'getting project by id');
         repo.getProjectById(req.params.id)
         .then((project) => {
             res.json(project);

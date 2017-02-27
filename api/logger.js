@@ -1,7 +1,7 @@
 const winston = require( 'winston' );
 const fs = require( 'fs' );
-const logDir = 'log'; // Or read from a configuration
-const env = process.env.NODE_ENV || 'development';
+const logDir = 'log'; // Or read from a configuration it is not good idea to put logs in files
+const env = process.env.NODE_ENV;
 
 
 if ( !fs.existsSync( logDir ) ) {
@@ -29,8 +29,8 @@ const logger = new( winston.Logger )( {
 
 module.exports = logger;
 
-
 // Use this singleton instance of logger like:
 // logger = require( 'Logger.js' );
 // logger.debug( 'your debug statement' );
 // logger.warn( 'your warning' );
+//

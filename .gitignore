@@ -13,3 +13,5 @@ ehthumbs.db
 .idea
 *.log
 .vscode
+config-loc.json
+.env
