@@ -7,32 +7,32 @@ var TaskSchema = new Schema({
         required:true
     },
     body: {
-        type: String,
-        required:true
+        type: String
     },
-    createdBy:      [{
+    createdBy: {
+        type: Schema.ObjectId,
+        ref: 'User'
         /*_id:  Number,
         name: String*/
-    }],
-    assignedTo:      [{
-       /* _id:  Number,
-        name: String*/
-    }],
+    },
+    assignedTo:  {
+        type: Schema.ObjectId,
+        ref: 'User'
+        /*_id:  Number,
+         name: String*/
+    },
     type:   {
         type: String,
         required:true
     },
     status:  {
-        type: String,
-        required:true
+        type: String
     },
     archived:  {
-        type: String,
-        required:true
+        type: String
     },
     priority:  {
-        type: String,
-        required:true
+        type: String
     },
     comments:       [{
        /* body: String,

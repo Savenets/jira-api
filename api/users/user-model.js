@@ -14,8 +14,8 @@ var UserSchema = new Schema({
     contactEmail: {
         type: String,
         required:true,
+        unique:true,
         validate: [validate.email, 'invalid email address']
-
     },
     password: {
         type: String,

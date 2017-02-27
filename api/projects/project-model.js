@@ -15,12 +15,14 @@ var ProjectSchema = new Schema({
         type:String,
         required: true
     },
-    createdBy: [{
+    createdBy: {
+        type: Schema.ObjectId,
+        ref: 'User'
         /*_id:  String,
         firstName: String,
         lastName: String,
         role: String*/
-    }],
+    },
     users: [{}],
     createdDate: {
         type: Date,

@@ -38,11 +38,12 @@ module.exports = (function () {
             description: req.body.description,
             createdBy: req.body.createdBy,
             link: req.body.link,
-            users: req.body.users,
+            users: JSON.parse(req.body.users),
             createdDate: new Date(),
             updatedDate: '',
             isActive: true
         };
+        logger.debug(typeof np.users);
         logger.debug(np.name + ' is being created');
         repo.createNewProject(np)
         .then(project => {
