@@ -1,5 +1,6 @@
 const winston = require( 'winston' );
 const fs = require( 'fs' );
+const config = require('./config');
 const logDir = 'log'; // Or read from a configuration it is not good idea to put logs in files
 const env = process.env.NODE_ENV;
 
@@ -15,7 +16,7 @@ const logger = new( winston.Logger )( {
             colorize: true
         } ),
         new winston.transports.File( {
-            level: env === 'development' ? 'debug' : 'info',
+            level: config.get('LOG:LEVEL'),
             filename: logDir + '/logs.log',
             maxsize: 1024 * 1024 * 10 // 10MB
         } )

@@ -3,7 +3,7 @@ const _ = require('lodash');
 const app = new express();
 //const config = require('../config');
 //const config = require('../configer');
-const config = require('dotenv').config({path: '../.env'});
+
 
 
 const tasks = require('./tasks/task-routes');
